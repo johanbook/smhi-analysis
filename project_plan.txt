@@ -1,0 +1,9 @@
+PROJECT PLAN
+Johan Book, Edvin Jakobsson
+MNXB01 2017-10-27
+
+Project Structure
+  data/ - data files
+
+Idea
+  tempTrender object to read and present data (done by Johan Book) 
