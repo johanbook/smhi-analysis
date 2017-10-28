@@ -2,10 +2,14 @@ PROJECT PLAN
 Johan Book, Edvin Jakobsson
 MNXB01 2017-10-27
 
+Idea
+  compare average temperature between places
+  calculate difference in temperature for each over the years
+
 Project Structure
   code/ - code files
   data/ - data files
 
-Idea
+Objects
   main - the main method that generates and stores relevant graphs (done by Edvin Jakobsson)
-  tempTrender - object to read and present data (done by Johan Book) 
+  tempData - object to read and present data (done by Johan Book) 
