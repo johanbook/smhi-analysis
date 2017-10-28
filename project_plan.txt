@@ -9,6 +9,7 @@ Idea
 Project Structure
   code/ - code files
   data/ - data files
+  info/ - information about project
 
 Objects
   main - the main method that generates and stores relevant graphs (done by Edvin Jakobsson)
