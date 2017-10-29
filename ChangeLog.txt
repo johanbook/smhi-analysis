@@ -1,3 +1,0 @@
-2017-10-29
-A basic template for the project have been setup together with sketches for basic IO.
-/Johan Book
