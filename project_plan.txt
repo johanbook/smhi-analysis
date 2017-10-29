@@ -12,5 +12,5 @@ Project Structure
   info/ - information about project
 
 Objects
-  main - the main method that generates and stores relevant graphs (done by Edvin Jakobsson)
-  tempData - object to read and present data (done by Johan Book) 
+  main - the main method that generates and stores relevant graphs (?)
+  tempData - object to read and present data (Johan Book) 
