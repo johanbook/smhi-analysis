@@ -1,15 +1,15 @@
-﻿Stationsnamn;Klimatnummer;Mäthöjd (meter över marken)
-Falun-Lugnet;105370;2.0
-
-Parameternamn;Beskrivning;Enhet
-Lufttemperatur;momentanvärde, 1 gång/tim;degree celsius
-
-Tidsperiod (fr.o.m);Tidsperiod (t.o.m);Höjd (meter över havet);Latitud (decimalgrader);Longitud (decimalgrader)
-2006-06-01 00:00:00;2015-11-30 23:59:59;140.0;60.619;15.6603
-1983-03-01 00:00:00;2006-01-12 23:59:59;160.0;60.6219;15.6235
-1951-03-01 00:00:00;1982-12-31 23:59:59;122.0;60.6219;15.6235
-
-Datum;Tid (UTC);Lufttemperatur;Kvalitet;;Tidsutsnitt:
+﻿#Stationsnamn;Klimatnummer;Mäthöjd (meter över marken)
+#Falun-Lugnet;105370;2.0
+#
+#Parameternamn;Beskrivning;Enhet
+#Lufttemperatur;momentanvärde, 1 gång/tim;degree celsius
+#
+#Tidsperiod (fr.o.m);Tidsperiod (t.o.m);Höjd (meter över havet);Latitud (decimalgrader);Longitud (decimalgrader)
+#2006-06-01 00:00:00;2015-11-30 23:59:59;140.0;60.619;15.6603
+#1983-03-01 00:00:00;2006-01-12 23:59:59;160.0;60.6219;15.6235
+#1951-03-01 00:00:00;1982-12-31 23:59:59;122.0;60.6219;15.6235
+#
+#Datum;Tid (UTC);Lufttemperatur;Kvalitet;;Tidsutsnitt:
 1951-03-25;12:00:00;4.7;G;;Kvalitetskontrollerade historiska data (utom de senaste 3 mån)
 1951-03-31;12:00:00;4.2;G;;Tidsperiod (fr.o.m.) = 1951-03-01 00:00:00 (UTC)
 1951-04-01;12:00:00;3.8;G;;Tidsperiod (t.o.m.) = 2015-09-01 06:00:00 (UTC)

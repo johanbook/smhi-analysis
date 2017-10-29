@@ -1,13 +1,13 @@
-﻿Stationsnamn;Klimatnummer;Mäthöjd (meter över marken)
-Borås;72450;2.0
-
-Parameternamn;Beskrivning;Enhet
-Lufttemperatur;momentanvärde, 1 gång/tim;degree celsius
-
-Tidsperiod (fr.o.m);Tidsperiod (t.o.m);Höjd (meter över havet);Latitud (decimalgrader);Longitud (decimalgrader)
-1961-01-01 00:00:00;2015-11-30 23:59:59;135.0;57.7611;12.9493
-
-Datum;Tid (UTC);Lufttemperatur;Kvalitet;;Tidsutsnitt:
+﻿#Stationsnamn;Klimatnummer;Mäthöjd (meter över marken)
+#Borås;72450;2.0
+#
+#Parameternamn;Beskrivning;Enhet
+#Lufttemperatur;momentanvärde, 1 gång/tim;degree celsius
+#
+#Tidsperiod (fr.o.m);Tidsperiod (t.o.m);Höjd (meter över havet);Latitud (decimalgrader);Longitud (decimalgrader)
+#1961-01-01 00:00:00;2015-11-30 23:59:59;135.0;57.7611;12.9493
+#
+#Datum;Tid (UTC);Lufttemperatur;Kvalitet;;Tidsutsnitt:
 1961-01-01;06:00:00;-0.5;G;;Kvalitetskontrollerade historiska data (utom de senaste 3 mån)
 1961-01-01;12:00:00;0.0;G;;Tidsperiod (fr.o.m.) = 1961-01-01 00:00:00 (UTC)
 1961-01-01;18:00:00;0.0;G;;Tidsperiod (t.o.m.) = 2015-09-01 06:00:00 (UTC)

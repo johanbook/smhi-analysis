@@ -1,13 +1,13 @@
-﻿Stationsnamn;Klimatnummer;Mäthöjd (meter över marken)
-Falsterbo;52230;2.0
-
-Parameternamn;Beskrivning;Enhet
-Lufttemperatur;momentanvärde, 1 gång/tim;degree celsius
-
-Tidsperiod (fr.o.m);Tidsperiod (t.o.m);Höjd (meter över havet);Latitud (decimalgrader);Longitud (decimalgrader)
-1951-01-01 00:00:00;2015-11-30 23:59:59;5.0;55.3836;12.8203
-
-Datum;Tid (UTC);Lufttemperatur;Kvalitet;;Tidsutsnitt:
+﻿#Stationsnamn;Klimatnummer;Mäthöjd (meter över marken)
+#Falsterbo;52230;2.0
+#
+#Parameternamn;Beskrivning;Enhet
+#Lufttemperatur;momentanvärde, 1 gång/tim;degree celsius
+#
+#Tidsperiod (fr.o.m);Tidsperiod (t.o.m);Höjd (meter över havet);Latitud (decimalgrader);Longitud (decimalgrader)
+#1951-01-01 00:00:00;2015-11-30 23:59:59;5.0;55.3836;12.8203
+#
+#Datum;Tid (UTC);Lufttemperatur;Kvalitet;;Tidsutsnitt:
 1951-01-01;06:00:00;-2.4;Y;;Kvalitetskontrollerade historiska data (utom de senaste 3 mån)
 1951-01-01;12:00:00;-0.8;Y;;Tidsperiod (fr.o.m.) = 1951-01-01 00:00:00 (UTC)
 1951-01-01;18:00:00;0.0;Y;;Tidsperiod (t.o.m.) = 2015-09-01 06:00:00 (UTC)
