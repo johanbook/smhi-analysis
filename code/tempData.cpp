@@ -9,8 +9,6 @@ using namespace std;
 // Constructor
 tempData::tempData(string path) 
 {
-	cout << "Path: " << path << "\n";
-	
 	// Open file reader
 	ifstream file(path);
 	if(!file.is_open())
@@ -30,15 +28,10 @@ tempData::tempData(string path)
 		cout << line << " == "; // For testing
 		
 		// Parse line
-		istringstream string_reader(line);	
-		string date = "";
-		double temperature = 0;
-		for(;string_reader;)
-		{	
-			string s;
-			if(!getline(string_reader, s, ';'))
-				break;
-			cout << s << " "; // For testing
+		vector<string> parsed = (line, ";", 9);	
+		for(int i = 0; i < parsed.size(); i++)
+		{
+			cout << parsed.at(i); // For testing
 		}
 		cout << "\n";
 	}
@@ -47,11 +40,11 @@ tempData::tempData(string path)
 }
 
 // Parses a string for some delimiter and returns vector with substrings
-vector<string> parse_string(string line, char delimiter)
+vector<string> parse_string(string line, char delimiter, int maxargs)
 {
 	istringstream string_reader(line);	
 	vector<string> parsed;
-	while(string_reader)
+	for(int i = 0; i < maxargs && string_reader; i++)
 	{	
 		string substring;
 		if(!getline(string_reader, substring, delimiter))
