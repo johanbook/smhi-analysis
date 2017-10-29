@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <vector>
 #include "tempData.h"
 using namespace std;
 
@@ -19,7 +20,6 @@ tempData::tempData(string path)
 	}
 
 	// Read data
-	// set delimiter ?;
 	string line;
 	while(getline(file,line))
 	{
@@ -27,7 +27,7 @@ tempData::tempData(string path)
 		if(line[0] == '#')
 			continue;
 		
-		cout << line << " == ";
+		cout << line << " == "; // For testing
 		
 		// Parse line
 		istringstream string_reader(line);	
@@ -38,12 +38,27 @@ tempData::tempData(string path)
 			string s;
 			if(!getline(string_reader, s, ';'))
 				break;
-			cout << s << " ";
+			cout << s << " "; // For testing
 		}
 		cout << "\n";
 	}
 
 	file.close();
+}
+
+// Parses a string for some delimiter and returns vector with substrings
+vector<string> parse_string(string line, char delimiter)
+{
+	istringstream string_reader(line);	
+	vector<string> parsed;
+	while(string_reader)
+	{	
+		string substring;
+		if(!getline(string_reader, substring, delimiter))
+			break;
+		parsed.push_back(substring);
+	}
+	return parsed;
 }
 
 // Main method to test class
