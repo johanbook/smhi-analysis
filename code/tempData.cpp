@@ -7,13 +7,6 @@
 #include "tempData.h"
 using namespace std;
 
-// FOR TESTING
-void print_vector(vector<string> vec)
-{
-	for(int i = 0; i < vec.size(); i++)
-		cout << vec.at(i) << " ";
-}
-
 // Constructor
 tempData::tempData(string path) 
 {
@@ -25,16 +18,10 @@ tempData::tempData(string path)
 		exit(1);
 	}
 
-	// Read data
-	string line;
-	while(getline(file,line))
-	{
-		// Skip lines starting with #
-		if(line[0] == '#')
-			continue;
-		
-		data.push_back(new tempPoint(line));
-	}
+	// Read data (ignore lines starting with #)
+	for(string line; getline(file,line);)
+		if(line[0] != '#')
+			data.push_back(new tempPoint(line));
 
 	// Close file (obviously)
 	file.close();
