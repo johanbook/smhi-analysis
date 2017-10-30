@@ -13,11 +13,12 @@
 #include <string>
 #include <vector>
 
+
 class tempData
 {
 
 public:
-	
+
 	// Constructor with path to data file
 	// Reads data and stores in this class
 	tempData(std::string filePath);
