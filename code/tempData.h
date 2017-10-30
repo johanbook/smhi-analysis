@@ -11,10 +11,12 @@
 #define TEMPTRENDER_H
 
 #include <string>
+#include <vector>
 
 class tempData
 {
-	public:
+
+public:
 	
 	// Constructor with path to data file
 	// Reads data and stores in this class
@@ -33,10 +35,14 @@ class tempData
 	// Calculates the mean temperature of a given month (for a given year)
 	double mean(int year, int month); 
 
-	private:
+private:
 
 	// Array to store data
 	double *data;
+
+	// Parses a string for some delimiter
+	// Returns vector with substrings
+	std::vector<std::string> parse_string(std::string line, char delimiter, int maxargs);
 	
 };
 

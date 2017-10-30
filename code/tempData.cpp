@@ -1,16 +1,24 @@
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
+#include <cstdlib> // exit
+#include <iostream> // cout
+#include <fstream> // ifstream
+#include <sstream> // istringstream
+#include <string> // string
+#include <vector> // vector
 #include "tempData.h"
 using namespace std;
+
+// FOR TESTING
+void print_vector(vector<string> vec)
+{
+	for(int i = 0; i < vec.size(); i++)
+		cout << vec.at(i) << " ";
+}
 
 // Constructor
 tempData::tempData(string path) 
 {
 	// Open file reader
-	ifstream file(path);
+	ifstream file(path.c_str());
 	if(!file.is_open())
 	{
 		cout << "ERROR: Unable to open " << path << "\n";
@@ -25,22 +33,30 @@ tempData::tempData(string path)
 		if(line[0] == '#')
 			continue;
 		
-		cout << line << " == "; // For testing
+		cout << line << "\t> "; // For testing
 		
-		// Parse line
-		vector<string> parsed = (line, ";", 9);	
-		for(int i = 0; i < parsed.size(); i++)
-		{
-			cout << parsed.at(i); // For testing
-		}
-		cout << "\n";
+		// Parse line, assuming 3 arguments (data, time, temp)
+		vector<string> parsed = parse_string(line, ';', 3);
+	
+		// Parse date
+		vector<string> date = parse_string(parsed.at(0), '-', 3);
+
+		// Parse time	
+		vector<string> time = parse_string(parsed.at(1), ':', 3);
+
+		// TESTING
+		print_vector(date);
+		cout << ":: ";
+		print_vector(time);
+		cout << ":: " << parsed.at(2) << "\n";
 	}
 
+	// Close file (obviously)
 	file.close();
 }
 
 // Parses a string for some delimiter and returns vector with substrings
-vector<string> parse_string(string line, char delimiter, int maxargs)
+vector<string> tempData::parse_string(string line, char delimiter, int maxargs)
 {
 	istringstream string_reader(line);	
 	vector<string> parsed;
