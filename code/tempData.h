@@ -7,12 +7,12 @@
 // Class contains suitable methods to read and manipulate data
 //
 
-#ifndef TEMPTRENDER_H
-#define TEMPTRENDER_H
+#ifndef TEMPDATA_H
+#define TEMPDATA_H
 
 #include <string>
 #include <vector>
-
+#include "tempPoint.h"
 
 class tempData
 {
@@ -39,12 +39,7 @@ public:
 private:
 
 	// Array to store data
-	double *data;
-
-	// Parses a string for some delimiter
-	// Returns vector with substrings
-	std::vector<std::string> parse_string(std::string line, char delimiter, int maxargs);
-	
+	vector<tempPoint> data;
 };
 
 #endif
