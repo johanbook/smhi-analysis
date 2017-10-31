@@ -7,8 +7,8 @@
 // Class contains suitable methods to read and manipulate data
 //
 
-#ifndef TEMPPOINT_H
-#define TEMPPOINT_H
+#ifndef TPOINT_H
+#define TPOINT_H
 
 #include <string>
 #include <vector>
