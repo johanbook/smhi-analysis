@@ -16,10 +16,9 @@
 #include "tpoint.h"
 using namespace std;
 
-// Constructor
+// Constructor:  Open file 
 treader::treader(string path) 
 {
-	// Open file reader
 	file.open(path.c_str());
 	if(!file.is_open())
 	{
@@ -55,7 +54,7 @@ tpoint* treader::get_tpoint()
 }
 
 
-// Main method to test class
+// TESTING: Main method to test class
 int main(int argc, char* argv[])
 {
 	if(argc < 2)
