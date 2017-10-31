@@ -4,8 +4,9 @@
 // 2017-10-30
 //
 
-#include <iostream>
+#include <iostream> // cout
 #include <sstream> // istringstream
+#include <stdlib.h> // atoi, atof
 #include <string> // string
 #include <vector> // vector
 #include "tempPoint.h"
@@ -25,10 +26,10 @@ tempPoint::tempPoint(string line)
 
 	// Store it
 	year = atoi(date.at(0).c_str());
-	month = stoi(date.at(1).c_str());
-	day = stoi(date.at(2).c_str());
-	hour = stoi(time.at(0).c_str());
-	temp = stoi(parsed.at(2).c_str());
+	month = atoi(date.at(1).c_str());
+	day = atoi(date.at(2).c_str());
+	hour = atoi(time.at(0).c_str());
+	temp = atof(parsed.at(2).c_str());
 
 	// Debug
 	cout << year << month << day << hour << temp << endl;
