@@ -1,3 +1,7 @@
 2017-10-29
 A basic template for the project have been setup together with sketches for basic IO.
 /Johan Book
+
+2017-10-31
+The classes tpoint and treader have been developped to facilitate IO. treader reads data line for line and returns a tpoint for each line, which contains all data.
+/Johan Book
