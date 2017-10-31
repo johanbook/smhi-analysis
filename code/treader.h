@@ -37,6 +37,9 @@ private:
 	
 	// Input stream
 	std::ifstream file;
+
+	// Data format. True for Uppsala format and false for SMHI format
+	bool uppsala = false;
 };
 
 #endif
