@@ -1,16 +1,18 @@
 PROJECT PLAN
-Johan Book, Edvin Jakobsson
+Johan Book, Edvin Jakobsson, Sara Gabriella
 MNXB01 2017-10-27
 
 Idea
-  compare average temperature between places
-  calculate difference in temperature for each over the years
-
-Project Structure
-  code/ - code files
-  data/ - data files
-  info/ - information about project
+  compare average temperature between places (using overlay with semi-transparent graphs)
+  calculate difference in temperature for each over the years (data from Uppsala)
 
 Objects
   main - the main method that generates and stores relevant graphs (?)
-  tempData - object to read and present data (Johan Book) 
+  treader - object to reads data line by line and convert it into tpoints (Johan Book) 
+  tpoint - object that stores one point in time-temp. space (Johan Book)
+
+Project Structure
+  code/ - code files
+
+  data/ - data files
+  info/ - information about project
