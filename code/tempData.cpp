@@ -19,8 +19,9 @@ tempData::tempData(string path)
 	}
 
 	// Read data (ignore lines starting with #)
-	for(string line; getline(file,line);)
-		if(line[0] != '#')
+	string line = "";
+	while(getline(file,line))
+		if(line[0] != '#' && line[3] != '#')
 			data.push_back(new tempPoint(line));
 
 	// Close file (obviously)

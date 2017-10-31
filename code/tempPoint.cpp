@@ -4,6 +4,7 @@
 // 2017-10-30
 //
 
+#include <iostream>
 #include <sstream> // istringstream
 #include <string> // string
 #include <vector> // vector
@@ -23,11 +24,14 @@ tempPoint::tempPoint(string line)
 	vector<string> time = parse_string(parsed.at(1), ':', 3);
 
 	// Store it
-	year = static_cast<int>(date.at(0));
-	month = static_cast<short int>(date.at(1));
-	day = static_cast<short int>(date.at(2));
-	hour = static_cast<short int>(time.at(0));
-	temp = static_cast<double>(parsed.at(2));
+	year = atoi(date.at(0).c_str());
+	month = stoi(date.at(1).c_str());
+	day = stoi(date.at(2).c_str());
+	hour = stoi(time.at(0).c_str());
+	temp = stoi(parsed.at(2).c_str());
+
+	// Debug
+	cout << year << month << day << hour << temp << endl;
 }
 
 // Parses a string for some delimiter and returns vector with substrings

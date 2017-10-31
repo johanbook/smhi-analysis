@@ -39,7 +39,7 @@ public:
 private:
 
 	// Array to store data
-	vector<tempPoint> data;
+	std::vector<tempPoint*> data;
 };
 
 #endif
