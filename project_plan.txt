@@ -19,7 +19,6 @@ Objects
   treader - object to reads data line by line and convert it into tpoints (Johan Book) 
   tpoint - object that stores one point in time-temp. space (Johan Book)
   
-
 Project Structure
   code/ - code files
 
