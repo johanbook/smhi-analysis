@@ -27,7 +27,10 @@ treader::treader(string path)
 	}
 	
 	// Check (from path) if Uppsala format
-	uppsala = (path.find("Uppsala") != string::npos);
+	if (path.find("Uppsala") != string::npos)
+		format = UPPSALA;
+	else
+		format = SMHI;
 }
 
 // Destructor
@@ -49,7 +52,7 @@ tpoint* treader::get_tpoint()
 	string line = "";
 	while(getline(file,line))
 		if(line[0] != '#' && line[3] != '#')
-			return new tpoint(line, uppsala);
+			return new tpoint(line, format);
 	
 	// If it did not sucessfully return a point, exit program
 	cout << "ERROR: Unable to read line\n";

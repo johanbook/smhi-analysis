@@ -14,16 +14,16 @@ using namespace std;
 
 // Constructor
 // Takes string with data and parses it (not for Uppsala)
-tpoint::tpoint(string line, bool uppsala) 
+tpoint::tpoint(string line, tformat format) 
 {
-	if(uppsala)
+	if(format == UPPSALA)
 		parse_uppsala(line);
 	else
 		parse_smhi(line);
 
 	// Debug
 	//cout << line << "\n";
-	if(uppsala)
+	if(format == UPPSALA)
 		cout << year << "-" << month << "-" << day << " " << temp << "\n";
 	else
 		cout << year << "-" << month << "-" << day << " " 

@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 
+enum tformat {SMHI, UPPSALA};
 
 class tpoint
 {
@@ -20,7 +21,7 @@ class tpoint
 public:
 
 	// Reads date, time and temp. from string and stores it in this class
-	tpoint(std::string line, bool uppsala);
+	tpoint(std::string line, tformat format);
 
 	// Destructor
 	~tpoint() {}
