@@ -16,13 +16,21 @@ using namespace std;
 // Takes string with data and parses it (not for Uppsala)
 tpoint::tpoint(string line, tformat format) 
 {
-	if(format == UPPSALA)
-		parse_uppsala(line);
-	else
-		parse_smhi(line);
+	// Parse data given format
+	switch(format)
+	{
+		case SMHI:
+			parse_smhi(line);
+			break;
+		case UPPSALA:
+			parse_uppsala(line);
+			break;
+		default:
+			cout << "ERROR: Unknown format\n";
+			exit(1);
+	}
 
-	// Debug
-	//cout << line << "\n";
+	// Debug, remove in final version
 	if(format == UPPSALA)
 		cout << year << "-" << month << "-" << day << " " << temp << "\n";
 	else

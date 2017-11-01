@@ -3,8 +3,8 @@
 // Johan Book
 // 2017-10-30
 //
-// Reads temperature data into a class which contains said data
-// Class contains suitable methods to read and manipulate data
+// Contains one point in time-temperature space and allows user to acces that data
+// Also parses said data from string
 //
 
 #ifndef TPOINT_H
