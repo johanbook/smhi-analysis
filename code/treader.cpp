@@ -22,7 +22,7 @@ treader::treader(string path)
 	file.open(path.c_str());
 	if(!file.is_open())
 	{
-		cout << "ERROR: Unable to open " << path << "\n";
+		cout << "ERROR: Unable to open \"" << path << "\"\n";
 		exit(1);
 	}
 	

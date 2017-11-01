@@ -1,14 +1,13 @@
-// cool_image.C
+// root_template.C
 // 
 // Johan Book
-// 2017-10-27
+// 2017-11-01
 //
-// Plots an image
+// Plots an image of temperatures
 //
 
 // include C++ STL headers 
 #include <iostream>
-#include <fstream>
 #include "treader.h"
 #include "tpoint.h"
 
@@ -22,25 +21,29 @@ using namespace std;
 #include <TCanvas.h> // canvas object
 
 // Read and analyze part
-void generate_image(std::string path);
+void template_function(std::string path);
 
 ///////////////////////////////////////////////////////////////
 // Source Code
 //////////////////////////////////////////////////////////////
 
 // Reads data and generates
-void generate_image(std::string path) 
+void template_function(std::string path) 
 {
 	treader* tr = new treader(path);
 	
 	// Create histogram
-	TH1D* hPhi = new TH1D("hV2", "Rooion; #varphi; Counts", 100, 0, 2*TMath::Pi());
+	TH1D* histo = new TH1D("hV2", "Rooion; #varphi; Counts", 100, 0, 2*TMath::Pi());
 
 	// Read from file while there is data to read
 	while(tr->has_next())
 	{
-		// Cout the year
-		cout << tr->get_tpoint()->get_year() << "\n";
+		// Get tpoint
+		tpoint* tp = tr->get_tpoint();
+
+		cout << tp->get_year() << "-" << tp->get_month() << "-" << tp->get_day() << " " << tp->get_temperature() << "\n";
+	
+		histo->Fill(tp->get_temperature());
 	}
 	
 	
@@ -50,11 +53,11 @@ void generate_image(std::string path)
 
 	// Create canvas for hPhi
 	TCanvas* c1 = new TCanvas("c1", "v2 canvas", 900, 600);
-	hPhi->SetMinimum(0);
-	hPhi->Draw();
+	histo->SetMinimum(0);
+	histo->Draw();
 
 	// Save canvas as a picture
-	c1->SaveAs("cool_image.png");
+	c1->SaveAs("template_image.png");
 }
 
 
