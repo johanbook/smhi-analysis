@@ -3,7 +3,7 @@
 // Johan Book
 // 2017-10-28
 //
-// Reads temperature data
+// Reads temperature data, similar to ifstream.getline()
 //
 
 #include <cstdlib> // exit
@@ -25,6 +25,12 @@ treader::treader(string path)
 		cout << "ERROR: Unable to open " << path << "\n";
 		exit(1);
 	}
+	
+	// Check (from path) if Uppsala format
+	if (path.find("Uppsala") != string::npos)
+		format = UPPSALA;
+	else
+		format = SMHI;
 }
 
 // Destructor
@@ -46,7 +52,7 @@ tpoint* treader::get_tpoint()
 	string line = "";
 	while(getline(file,line))
 		if(line[0] != '#' && line[3] != '#')
-			return new tpoint(line);
+			return new tpoint(line, format);
 	
 	// If it did not sucessfully return a point, exit program
 	cout << "ERROR: Unable to read line\n";
