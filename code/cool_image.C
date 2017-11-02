@@ -69,7 +69,7 @@ void generate_image(std::string path)
 		
 		// Save canvas as a picture
 		stringstream ss;
-		ss << "image_" << (i+1) << ".png";
+		ss << "results/image_" << (i+1) << ".png";
 		cout << "======================Path: " << ss.str() << "\n";
 		c1->SaveAs(ss.str().c_str());
 		delete c1;
@@ -130,8 +130,10 @@ TGraphErrors* createGraph(std::string path, int i)
 
 	// Create graphs
 	TGraphErrors* graph = new TGraphErrors(n,x,y,xe,ye);
-
-	graph->SetFillColor(3+i);
+	if(3+i != 10)
+		graph->SetFillColor(3+i);
+	else
+		graph->SetFillColor(25);
 	//graph->SetFillStyle(0); //4050 should be semi-transparent
 	//graph->SetFillColorAlpha(9, 0.571);
 	//graph->SetLineColorAlpha(i,1);
