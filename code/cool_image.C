@@ -29,7 +29,7 @@ using namespace std;
 void generate_image(std::string path);
 
 // Creates a graph
-TGraphErrors* createGraph(std::string path);
+TGraphErrors* createGraph(std::string path, int i);
 
 // Standard deviation
 double std_dev(vector<double> data, double mean);
@@ -55,12 +55,18 @@ void generate_image(std::string path)
 	for(int i = 0; i < 9; i++)
 	{
 		TMultiGraph* mg = new TMultiGraph(); // REMOVE THIS LINE
-		mg->Add(createGraph(paths[i]));
+		mg->Add(createGraph(paths[i],i));
 	
 		// Create canvas for hPhi
 		TCanvas* c1 = new TCanvas("c1", "Temperature Bands", 900, 600);
 		mg->Draw("a4");//Draw("a4");
-
+	
+		// Graph title, ranges, etc
+		mg->GetYaxis()->SetLimits(-5,15);
+		mg->GetYaxis()->SetTitle("Average Temperature");
+		mg->GetXaxis()->SetLimits(1950,2020);
+		mg->GetXaxis()->SetTitle("Year");
+		
 		// Save canvas as a picture
 		stringstream ss;
 		ss << "image_" << (i+1) << ".png";
@@ -71,7 +77,7 @@ void generate_image(std::string path)
 }
 
 // Create a graph for one given path
-TGraphErrors* createGraph(std::string path)
+TGraphErrors* createGraph(std::string path, int i)
 {
 	treader* tr = new treader(path);
 	
@@ -114,20 +120,21 @@ TGraphErrors* createGraph(std::string path)
 	double ye[n];
 	
 	// Extract data from vectors
-	for(int i = 0; i < n; i++)
+	for(int k = 0; k < n; k++)
 	{
-		x[i] = year[i];
-		xe[i] = 0;
-		y[i] = temperature[i];
-		ye[i] = stddev[i];
+		x[k] = year[k];
+		xe[k] = 0;
+		y[k] = temperature[k];
+		ye[k] = stddev[k];
 	}
 
 	// Create graphs
 	TGraphErrors* graph = new TGraphErrors(n,x,y,xe,ye);
-	//graph->SetFillColor(12);
+
+	graph->SetFillColor(3+i);
 	//graph->SetFillStyle(0); //4050 should be semi-transparent
 	//graph->SetFillColorAlpha(9, 0.571);
-	graph->SetLineColorAlpha(46,0.1);
+	//graph->SetLineColorAlpha(i,1);
 	return graph;
 }
 
