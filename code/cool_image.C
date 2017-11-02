@@ -62,14 +62,14 @@ void generate_image(std::string path)
 		mg->Draw("a4");//Draw("a4");
 	
 		// Graph title, ranges, etc
-		mg->GetYaxis()->SetLimits(-5,15);
+		mg->GetYaxis()->SetLimits(-5,20);
 		mg->GetYaxis()->SetTitle("Average Temperature");
 		mg->GetXaxis()->SetLimits(1950,2020);
 		mg->GetXaxis()->SetTitle("Year");
 		
 		// Save canvas as a picture
 		stringstream ss;
-		ss << "results/image_" << (i+1) << ".png";
+		ss << "results/image" << (i+1) << ".png";
 		cout << "======================Path: " << ss.str() << "\n";
 		c1->SaveAs(ss.str().c_str());
 		delete c1;
