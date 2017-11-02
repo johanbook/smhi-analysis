@@ -37,10 +37,10 @@ public:
 private:
 
 	// Data
-	int year = -1;
-	short int month = -1;
-	short int day = -1;
-	short int hour = -1;
+	int year;
+	short int month;
+	short int day;
+	short int hour;
 	double temp;
 
 	// Parse data for SMHI and Uppsala (different formats

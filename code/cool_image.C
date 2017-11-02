@@ -1,136 +1,121 @@
-// Analyze_v2.C
+// cool_image.C
 // 
-// Homework 7b
 // Johan Book
-// 2017-10-27
+// 2017-11-01
+//
+// Plots an image
 //
 
 // include C++ STL headers 
 #include <iostream>
-#include <fstream>
+#include <vector>
+#include "treader.h"
+#include "tpoint.h"
 
 using namespace std;
 
 // ROOT library obejcts
 #include <TF1.h> // 1d function class
+#include <TGraphErrors.h> // TGraphErrors
 #include <TH1.h> // 1d histogram classes
 #include <TStyle.h>  // style object
 #include <TMath.h>   // math functions
+#include <TMultiGraph.h> // TMultiGraph
 #include <TCanvas.h> // canvas object
 
 // Read and analyze part
-void analyze_v2_2particle();
+void generate_image(std::string path);
 
-// Calculates <2> from a Double_t array using the Standard Method
-Double_t c2_standard(Double_t *phi, Int_t nTracks);
+// Creates a graph
+TGraphErrors* createGraph(std::string path);
 
-// Calculates <2> from a Double_t array using Q-vectors
-Double_t c2_Qvector(Double_t *phi, Int_t nTracks);
-
-// Caclulates v2 for a given value of <2>
-Double_t extract_v2(Double_t c2){ return TMath::Sqrt(TMath::Abs(c2));}
+// Standard deviation
+double std_dev(vector<double> data, double mean);
 
 ///////////////////////////////////////////////////////////////
 // Source Code
 //////////////////////////////////////////////////////////////
 
-// Analyze data in file phi_dist.day and calculate v2
-void analyze_v2_2particle() 
+// Reads data and generates
+void generate_image(std::string path) 
 {
-	Int_t nEvents = 0;
-	Double_t mean_nTracks = 0;
-	string helpString; //dummy string
+	string paths[] = {"data/Boras.csv", "data/Falsterbo.csv", "data/Lulea.csv", "data/Lund.csv"};	
 
-	// Open input file
-	ifstream file("phi_dist.dat");
-	Int_t eventNo = -1;
-
-	// Store <2> info
-	Double_t sum_c2 = 0;
-	Double_t sum_c2_Q = 0;
-
-	// Create histogram
-	TH1D* hPhi = new TH1D("hV2", "Root func generated v2 distribution; #varphi; Counts", 100, 0, 2*TMath::Pi());
-
-	// Read from file while there is data to read
-	while(file >> helpString >> eventNo)
-	{
-		nEvents++;
-		
-		Int_t nTracks = -1;
-		file >> helpString >> nTracks;
-		mean_nTracks += nTracks;
-
-		// Declare array
-		Double_t* phi = new Double_t[nTracks];
-
-		// Read data into array
-		for(Int_t nt = 0; nt < nTracks; nt++)
-		{	
-			file >> helpString >> helpString >> phi[nt];
-			hPhi->Fill(phi[nt]);
-		}
-
-		// Print v2 estimates
-		sum_c2 += c2_standard(phi, nTracks);
-		sum_c2_Q += c2_Qvector(phi, nTracks);
-		
-		// Delete dynamic array to release memory
-		delete phi;
-	}
+	TMultiGraph* mg = new TMultiGraph();
+	for(int i = 0; i < 1; i++)
+		mg->Add(createGraph(paths[i]));
 	
-	// Print general info
-	mean_nTracks /= nEvents;
-	cout << "Number of events: " << nEvents << "\n";
-	cout << "Mean number of tracks: " << mean_nTracks << "\n"; 
-	
-	// Calculate and print mean v2
-	Double_t mean_c2 = sum_c2 / nEvents;
-	Double_t mean_c2_Q = sum_c2_Q / nEvents;
-	cout << "\nResult:\n";
-	cout << "v2 (average of " << nEvents << " events) = " << extract_v2(mean_c2) << "\n";
-	cout << "Q: v2 (average of " << nEvents << " events) = " << extract_v2(mean_c2_Q) << "\n";
-
 	// Set ROOT drawing styles
 	gStyle->SetOptStat(1111);
 	gStyle->SetOptFit(1111);
 
 	// Create canvas for hPhi
-	TCanvas* c1 = new TCanvas("c1", "v2 canvas", 900, 600);
-	hPhi->SetMinimum(0);
-	hPhi->Draw();
+	TCanvas* c1 = new TCanvas("c1", "canvas", 900, 600);
+	//mg->SetMinimum(0);
+	//mg->SetFillColorAlpha(kBlue, 0.1);
+	mg->Draw("a4");
 
 	// Save canvas as a picture
-	c1->SaveAs("v2_rootfunc.png");
+	c1->SaveAs("cool_image.png");
 }
 
-// Calculate v2 using the standard method 
-Double_t c2_standard(Double_t *phi, Int_t nTracks)
+TGraphErrors* createGraph(std::string path)
 {
-	Double_t sum_cos2_diff = 0;
-	Int_t num = 0;
-	
-	for(Int_t i = 0; i < nTracks; i++)
-		for(Int_t j = i+1; j < nTracks; j++, num++)
-			sum_cos2_diff += 2*TMath::Cos(2*(phi[i] - phi[j]));
-	
-	return sum_cos2_diff/(2*num);
-}
+	treader* tr = new treader(path);
 
-// Calculate v2 using Q vectors
-Double_t c2_Qvector(Double_t *phi, Int_t nTracks)
-{
-	// Q vector
-	Double_t sum_cos2 = 0;
-	Double_t sum_sin2 = 0;
+	vector<int> year;
+	vector<double> temperature;
+	vector<double> stddev;
 
-	// Compute Q vector
-	for(Int_t i = 0; i < nTracks; i++)
-	{
-		sum_cos2 += TMath::Cos(2*phi[i]);
-		sum_sin2 += TMath::Sin(2*phi[i]);
+	// Read from file while there is data to read
+	int year1 = -1;
+	while(tr->has_next()){
+		int year2 = year1;
+		double tsum = 0;
+		int nentries = 0;
+		vector<double> entries;
+		while(tr->has_next() && year1 == year2)
+		{
+			tpoint* tp = tr->get_tpoint();
+			tsum += tp->get_temperature();
+			entries.push_back(tp->get_temperature());
+			nentries++;
+			year2 = tp->get_year();	
+			if(year1 == -1)
+				year1 = year2;
+		}
+		year.push_back(year1);
+		temperature.push_back(tsum/nentries);
+		stddev.push_back(std_dev(entries, tsum/nentries));
+
+		year1 = year2;
+		
+		cout << year1 << " " << tsum / nentries << "\n";
 	}
+	int n = year.size();
+	double x[n];
+	double xe[n];
+	double y[n];
+	double ye[n];
+	for(int i = 0; i < n; i++)
+	{
+		x[i] = year[i];
+		xe[i] = 0;
+		y[i] = temperature[i];
+		ye[i] = stddev[i];
+	}
+	TGraphErrors* graph = new TGraphErrors(n,x,y,xe,ye);
+	graph->SetFillColor(6);
+	graph->SetFillStyle(3005);
+	//graph->SetFillColorAlpha(kBlue, 0.1);
+	return graph;
+}
 
-	Double_t Q2 = sum_cos2*sum_cos2 + sum_sin2*sum_sin2;
-	return (Q2 - nTracks)/(nTracks*(nTracks - 1));
+// Standard deviation
+double std_dev(vector<double> data, double avg)
+{
+	double sum = 0;
+	for(size_t i = 0; i < data.size(); i++)
+		sum += (data[i] - avg)*(data[i] - avg);
+	return TMath::Sqrt(sum/(data.size()-1));
 }

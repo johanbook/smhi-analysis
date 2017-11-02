@@ -29,13 +29,6 @@ tpoint::tpoint(string line, tformat format)
 			cout << "ERROR: Unknown format\n";
 			exit(1);
 	}
-
-	// Debug, remove in final version
-	if(format == UPPSALA)
-		cout << year << "-" << month << "-" << day << " " << temp << "\n";
-	else
-		cout << year << "-" << month << "-" << day << " " 
-		<< hour << " " << temp << "\n";
 }
 
 // Parses SMHI data
