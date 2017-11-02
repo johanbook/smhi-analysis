@@ -9,3 +9,7 @@ The classes tpoint and treader have been developped to facilitate IO. treader re
 2017-10-32
 Customized tpoint and treader to be able to determine format (SMHI or Uppsala) and parse it on its own.
 /Johan Book
+
+2017-11-2
+Created branch transparent_graphs where cool_image.C is producing several different graphs which will later will be combined to a single image.
+/Johan Book
