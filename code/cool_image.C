@@ -8,6 +8,8 @@
 
 // include C++ STL headers 
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <vector>
 #include "treader.h"
 #include "tpoint.h"
@@ -39,30 +41,41 @@ double std_dev(vector<double> data, double mean);
 // Reads data and generates
 void generate_image(std::string path) 
 {
-	string paths[] = {"data/Boras.csv", "data/Falsterbo.csv", "data/Lulea.csv", "data/Lund.csv"};	
+	string paths[] = {"data/Boras.csv", "data/Falsterbo.csv", "data/Falun.csv", "data/Karlstad.csv", "data/Lulea.csv", "data/Lund.csv", "data/Soderarm.csv", "data/Umea.csv", "data/Visby.csv"};	
 
-	TMultiGraph* mg = new TMultiGraph();
-	for(int i = 0; i < 1; i++)
-		mg->Add(createGraph(paths[i]));
-	
 	// Set ROOT drawing styles
 	gStyle->SetOptStat(1111);
 	gStyle->SetOptFit(1111);
 
-	// Create canvas for hPhi
-	TCanvas* c1 = new TCanvas("c1", "canvas", 900, 600);
-	//mg->SetMinimum(0);
-	//mg->SetFillColorAlpha(kBlue, 0.1);
-	mg->Draw("a4");
 
-	// Save canvas as a picture
-	c1->SaveAs("cool_image.png");
+	// Multigraph containing all graphs
+	//TMultiGraph* mg = new TMultiGraph();
+	
+	
+	for(int i = 0; i < 9; i++)
+	{
+		TMultiGraph* mg = new TMultiGraph(); // REMOVE THIS LINE
+		mg->Add(createGraph(paths[i]));
+	
+		// Create canvas for hPhi
+		TCanvas* c1 = new TCanvas("c1", "Temperature Bands", 900, 600);
+		mg->Draw("a4");//Draw("a4");
+
+		// Save canvas as a picture
+		stringstream ss;
+		ss << "image_" << (i+1) << ".png";
+		cout << "======================Path: " << ss.str() << "\n";
+		c1->SaveAs(ss.str().c_str());
+		delete c1;
+	}
 }
 
+// Create a graph for one given path
 TGraphErrors* createGraph(std::string path)
 {
 	treader* tr = new treader(path);
-
+	
+	// Storage for necessary data
 	vector<int> year;
 	vector<double> temperature;
 	vector<double> stddev;
@@ -92,11 +105,15 @@ TGraphErrors* createGraph(std::string path)
 		
 		cout << year1 << " " << tsum / nentries << "\n";
 	}
+
+	// Data to create actual graph
 	int n = year.size();
 	double x[n];
 	double xe[n];
 	double y[n];
 	double ye[n];
+	
+	// Extract data from vectors
 	for(int i = 0; i < n; i++)
 	{
 		x[i] = year[i];
@@ -104,10 +121,13 @@ TGraphErrors* createGraph(std::string path)
 		y[i] = temperature[i];
 		ye[i] = stddev[i];
 	}
+
+	// Create graphs
 	TGraphErrors* graph = new TGraphErrors(n,x,y,xe,ye);
-	graph->SetFillColor(6);
-	graph->SetFillStyle(3005);
-	//graph->SetFillColorAlpha(kBlue, 0.1);
+	//graph->SetFillColor(12);
+	//graph->SetFillStyle(0); //4050 should be semi-transparent
+	//graph->SetFillColorAlpha(9, 0.571);
+	graph->SetLineColorAlpha(46,0.1);
 	return graph;
 }
 
