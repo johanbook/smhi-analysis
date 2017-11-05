@@ -5,6 +5,7 @@
 //
 // Reads temperature data into a class which contains said data
 // Class contains suitable methods to read and manipulate data
+// OBS! When parsing Uppsala data this code does not take place into consideration
 //
 
 #ifndef TREADER_H
