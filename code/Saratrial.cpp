@@ -9,19 +9,19 @@ using namespace std;
 int ndata; 
 int y=0; //year counter
 
-double Function_maxT(double tabella[][106640], int *giorno, double Tmax_temporanea,int nriga);
-int Numberoutofdate(double**table,int nriga);
+double Function_maxT(double tabella[][6], double Tmax_temporanea,int nriga);
+int Numberoutofdate(double table[][6],int nriga);
+int date_maxT[292];
 
 //MAIN
 
 	int main(){
-	double table [6][106640];//ndata= total number of lines. 
-	int nyears;//total number of years. E.g. for Uppsala is(2013-1722+1).
+	double table [106640][6];//ndata= total number of lines. 
+	int nyears=292;//total number of years. E.g. for Uppsala is(2013-1722+1).
 	double maxT[nyears];
-	//int date_maxT[nyears];
+	int arr_year[nyears];
+	int line_maxT;
 	double pippo;//dummy variable for finding the highest temperature of the year
-	//int y=0; //year counter
-
 
 	//Open and read file in table [6][ndata] bidimensional array
 	ifstream file("../data/Uppsala.dat");
@@ -53,22 +53,31 @@ int Numberoutofdate(double**table,int nriga);
 	for(int i=0;i<106640;i++){
 		if(table[i][0]==y+1722){
 			pippo = maxT[y];//pippo= dummy variable. It is compared with the other temperatures in Function_maxT .
-			//maxT[y]=Function_maxT(table,date_maxT,maxT[y],i);// date_maxT is the pointer to the array, do not confuse it with date_maxT[y]!
+			maxT[y]=Function_maxT(table,pippo,i);
+			//date_maxT[y]= Numberoutofdate(table,line_maxT);
+			arr_year[y]=1722+y;
 		}else if(table[i][0]==y+1722+1){
 			y++;
-			//maxT[y]=Function_maxT(table,date_maxT,maxT[y],i);
+			maxT[y]=Function_maxT(table,maxT[y],i);
+			arr_year[y]=1722+y;
 		}else{
 			cout<<"error:1 year missing in the data file"<<endl;//error message if one year is missing in the data file
-		}    
+		}
 	}
+	
+	
+	for(int k=0; k<nyears;k++){//test
+		cout<<maxT[k]<<" "<<arr_year[k]<<" "<<endl;
 	}
+}
 
 	//FUNCTIONS
 
-	double Function_maxT(double table[][106640], int *giorno, double Tmax_temporanea,int nriga){   //It takes into consideration the whole array
+	//double Function_maxT(double table[][106640], int *giorno, double Tmax_temporanea,int nriga){   //It takes into consideration the whole array
+	double Function_maxT(double table[][6], double Tmax_temporanea,int nriga){ 	
 		if(table[nriga][3]>Tmax_temporanea){    //It goes through the Temperature column
 			Tmax_temporanea = table[nriga][3];
-			//date_maxT[y] = Numberoutofdate(table,nriga);    //It updates the date through pointer
+			//date_maxT = Numberoutofdate(table,nriga);    //It updates the date through pointer
 		}
 		return Tmax_temporanea;
 	}
