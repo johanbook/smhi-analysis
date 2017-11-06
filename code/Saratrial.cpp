@@ -12,6 +12,8 @@ int y=0; //year counter
 double Function_maxT(double tabella[][6], double Tmax_temporanea,int nriga);
 int Numberoutofdate(double table[][6],int nriga);
 int date_maxT[292];
+int day_maxT;
+double Arr_temporary[2];
 
 //MAIN
 
@@ -37,7 +39,7 @@ int date_maxT[292];
 		table[count][3]=Temp;
 		table[count][4]=corrTemp;
 		table[count][5]=ID;
-		cout<< table[count][0]<<" "<<table[count][3]<<endl; //test
+		//cout<< table[count][0]<<" "<<table[count][3]<<endl; //test
 		//cout<<yearNo; //test
 		count++;
 		ndata=count;
@@ -53,12 +55,18 @@ int date_maxT[292];
 	for(int i=0;i<106640;i++){
 		if(table[i][0]==y+1722){
 			pippo = maxT[y];//pippo= dummy variable. It is compared with the other temperatures in Function_maxT .
-			maxT[y]=Function_maxT(table,pippo,i);
+			//maxT[y]=Function_maxT(table,pippo,i);
 			//date_maxT[y]= Numberoutofdate(table,line_maxT);
+			*Arr_temporary=Function_maxT(table,pippo,i);
+			maxT[y]=Arr_temporary[0];
+			date_maxT[y]=Arr_temporary[1];
 			arr_year[y]=1722+y;
 		}else if(table[i][0]==y+1722+1){
 			y++;
-			maxT[y]=Function_maxT(table,maxT[y],i);
+			pippo=-20;
+			*Arr_temporary=Function_maxT(table,pippo,i);
+			maxT[y]=Arr_temporary[0];
+			date_maxT[y]=Arr_temporary[1];
 			arr_year[y]=1722+y;
 		}else{
 			cout<<"error:1 year missing in the data file"<<endl;//error message if one year is missing in the data file
@@ -67,7 +75,7 @@ int date_maxT[292];
 	
 	
 	for(int k=0; k<nyears;k++){//test
-		cout<<maxT[k]<<" "<<arr_year[k]<<" "<<endl;
+		cout<<maxT[k]<<" "<<date_maxT[k]<<" "<<arr_year[k]<<" "<<endl;
 	}
 }
 
@@ -77,12 +85,14 @@ int date_maxT[292];
 	double Function_maxT(double table[][6], double Tmax_temporanea,int nriga){ 	
 		if(table[nriga][3]>Tmax_temporanea){    //It goes through the Temperature column
 			Tmax_temporanea = table[nriga][3];
-			//date_maxT = Numberoutofdate(table,nriga);    //It updates the date through pointer
+			day_maxT = Numberoutofdate(table,nriga);    //It updates the date through pointer
+			Arr_temporary[0]=Tmax_temporanea;
+			Arr_temporary[1]=day_maxT;
 		}
-		return Tmax_temporanea;
+		return *Arr_temporary;
 	}
 
-	int Numberoutofdate(double table[][106640],int nriga){   //estrae il numero del giorno
+	int Numberoutofdate(double table[][6],int nriga){   //estrae il numero del giorno
 		int giorno=-1;
 		
 		if(table[nriga][1]>1){      //adding the days of january
@@ -128,4 +138,4 @@ int date_maxT[292];
 		giorno += table[nriga][2];
 		
 		return giorno;
-	}
+}
