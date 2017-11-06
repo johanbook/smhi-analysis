@@ -15,11 +15,18 @@ int y=0; //year counter
 
 //class
 
-Hottest::Hottest(double _table[106640][6], double _Tmax_temporanea,int _nriga)
-{ table[106640][6]=_table[106640][6];
-  Tmax_temporanea=_Tmax_temporanea;
+Hottest::Hottest(double table[][6], double _Tmax_temporanea,int _nriga)
+{ Tmax_temporanea=_Tmax_temporanea;
   nriga=_nriga;}
 Hottest::~Hottest(){}
+
+		void Function_maxT(){ 	
+		if(table[nriga][3]>Tmax_temporanea){    //It goes through the Temperature column
+			Tmax_temporanea = table[nriga][3];
+			cout<<table[nriga][3]<<" "<<Tmax_temporanea<<" "<<nriga<<endl;
+			//date_maxT = Numberoutofdate(table,nriga);    //It updates the date through pointer
+		}
+	;}
 
 
 //MAIN
@@ -46,7 +53,7 @@ Hottest::~Hottest(){}
 			table[count][3]=Temp;
 			table[count][4]=corrTemp;
 			table[count][5]=ID;
-			cout<< table[count][0]<<" "<<table[count][3]<<endl; //test
+			//cout<< table[count][0]<<" "<<table[count][3]<<endl; //test
 			//cout<<yearNo; //test
 			count++;
 			ndata=count;
@@ -65,6 +72,7 @@ Hottest::~Hottest(){}
 				Hottest Temp (table,maxT[y],i);
 				Temp.Function_maxT();
 				maxT[y]= Temp.GetTmax_temporanea();
+				//cout<<maxT[y]<<endl;
 				arr_year[y]=1722+y;
 			}else if(table[i][0]==y+1722+1){
 				y++;
@@ -81,5 +89,6 @@ Hottest::~Hottest(){}
 			cout<<maxT[k]<<" "<<arr_year[k]<<" "<<endl;
 		}
 	}
-
 	
+
+
