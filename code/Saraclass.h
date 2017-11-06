@@ -3,13 +3,14 @@ using namespace std;
 
 class Hottest {
 	public:
-	Hottest (double _table[][6], double _Tmax_temporanea,int _nriga);
+	Hottest (double *table, double _Tmax_temporanea,int _nriga);
 	~Hottest();
 	//double Function_maxT(double table[][106640], int *giorno, double Tmax_temporanea,int nriga){   //It takes into consideration the whole array
 	
 	void Function_maxT(){ 	
 		if(table[nriga][3]>Tmax_temporanea){    //It goes through the Temperature column
 			Tmax_temporanea = table[nriga][3];
+			cout<<table[nriga][3]<<" "<<Tmax_temporanea<<" "<<nriga<<endl;
 			//date_maxT = Numberoutofdate(table,nriga);    //It updates the date through pointer
 		}
 	;}
