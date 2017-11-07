@@ -135,7 +135,7 @@ void global_warming_function(string path) {
 	graph->Draw("SAME C");
 	
 			// Save canvas as a picture
-	//c1->SaveAs("template_image.png");
+	c1->SaveAs("global_warming.png");
 }
 
 

@@ -4,10 +4,13 @@
 // 2017-11-01
 //
 // Plots an image
+// Should be run from project root folder
 //
 
 // include C++ STL headers 
 #include <iostream>
+#include <string>
+#include <sstream>
 #include <vector>
 #include "treader.h"
 #include "tpoint.h"
@@ -24,10 +27,10 @@ using namespace std;
 #include <TCanvas.h> // canvas object
 
 // Read and analyze part
-void generate_image(std::string path);
+void generate_image();
 
-// Creates a graph
-TGraphErrors* createGraph(std::string path);
+// Creates a graph from a file specified in path, stored in results_i.png
+TGraphErrors* createGraph(std::string path, int i);
 
 // Standard deviation
 double std_dev(vector<double> data, double mean);
@@ -36,78 +39,109 @@ double std_dev(vector<double> data, double mean);
 // Source Code
 //////////////////////////////////////////////////////////////
 
-// Reads data and generates
-void generate_image(std::string path) 
+// Reads data and generates several images
+void generate_image() 
 {
-	string paths[] = {"data/Boras.csv", "data/Falsterbo.csv", "data/Lulea.csv", "data/Lund.csv"};	
+	// Path to all images
+	string paths[] = {"data/Boras.csv", "data/Falsterbo.csv", "data/Falun.csv", "data/Karlstad.csv", "data/Lulea.csv", "data/Lund.csv", "data/Soderarm.csv", "data/Umea.csv", "data/Visby.csv"};	
 
-	TMultiGraph* mg = new TMultiGraph();
-	for(int i = 0; i < 1; i++)
-		mg->Add(createGraph(paths[i]));
-	
 	// Set ROOT drawing styles
 	gStyle->SetOptStat(1111);
 	gStyle->SetOptFit(1111);
-
-	// Create canvas for hPhi
-	TCanvas* c1 = new TCanvas("c1", "canvas", 900, 600);
-	//mg->SetMinimum(0);
-	//mg->SetFillColorAlpha(kBlue, 0.1);
-	mg->Draw("a4");
-
-	// Save canvas as a picture
-	c1->SaveAs("cool_image.png");
+	
+	// Loop over all paths in paths[]
+	for(int i = 0; i < 9; i++)
+	{
+		// TMultiGraph is here superfluous but hey, it works
+		TMultiGraph* mg = new TMultiGraph();
+		mg->Add(createGraph(paths[i],i));
+	
+		// Create canvas for hPhi
+		TCanvas* c1 = new TCanvas("c1", "Temperature Bands", 900, 600);
+		mg->Draw("a4");//Draw("a4");
+	
+		// Graph title, ranges, etc
+		mg->GetYaxis()->SetLimits(-5,20);
+		mg->GetYaxis()->SetTitle("Average Temperature");
+		mg->GetXaxis()->SetLimits(1950,2020);
+		mg->GetXaxis()->SetTitle("Year");
+		
+		// Save canvas as a picture
+		stringstream ss;
+		ss << "results/image" << (i+1) << ".png";
+		cout << ss.str() << " was saved\n";
+		c1->SaveAs(ss.str().c_str());
+		delete c1;
+	}
 }
 
-TGraphErrors* createGraph(std::string path)
+// Create a graph for one given path
+TGraphErrors* createGraph(std::string path, int i)
 {
+	// Create treader (see treader.h) to parse temperature data in given path
 	treader* tr = new treader(path);
-
+	
+	// Storage for necessary data
 	vector<int> year;
 	vector<double> temperature;
 	vector<double> stddev;
 
 	// Read from file while there is data to read
-	int year1 = -1;
+	int studied_year = -1;
 	while(tr->has_next()){
-		int year2 = year1;
-		double tsum = 0;
-		int nentries = 0;
-		vector<double> entries;
-		while(tr->has_next() && year1 == year2)
+		int data_year = studied_year;
+		double tsum = 0; // temperature sum
+		int nentries = 0; // number of entries
+		vector<double> entries; // entries for this year
+		
+		// While the 
+		while(tr->has_next() && studied_year == data_year)
 		{
+			nentries++;
 			tpoint* tp = tr->get_tpoint();
 			tsum += tp->get_temperature();
 			entries.push_back(tp->get_temperature());
-			nentries++;
-			year2 = tp->get_year();	
-			if(year1 == -1)
-				year1 = year2;
+	
+			data_year = tp->get_year();	
+			
+			// If studied year has not been intialized, then initialize it
+			if(studied_year == -1)
+				studied_year = data_year;
 		}
-		year.push_back(year1);
+		
+		// Store year, temperature and standard deviation
+		year.push_back(studied_year);
 		temperature.push_back(tsum/nentries);
 		stddev.push_back(std_dev(entries, tsum/nentries));
 
-		year1 = year2;
-		
-		cout << year1 << " " << tsum / nentries << "\n";
+		studied_year = data_year;
 	}
+
+	// Data to create actual graph
 	int n = year.size();
 	double x[n];
 	double xe[n];
 	double y[n];
 	double ye[n];
-	for(int i = 0; i < n; i++)
+	
+	// Extract data from vectors
+	for(int k = 0; k < n; k++)
 	{
-		x[i] = year[i];
-		xe[i] = 0;
-		y[i] = temperature[i];
-		ye[i] = stddev[i];
+		x[k] = year[k];
+		xe[k] = 0;
+		y[k] = temperature[k];
+		ye[k] = stddev[k];
 	}
+
+	// Create graphs
 	TGraphErrors* graph = new TGraphErrors(n,x,y,xe,ye);
-	graph->SetFillColor(6);
-	graph->SetFillStyle(3005);
-	//graph->SetFillColorAlpha(kBlue, 0.1);
+	
+	// Set fill colors (color 1,2, 10 are undesired and skipped)
+	if(3+i != 10)
+		graph->SetFillColor(3+i);
+	else
+		graph->SetFillColor(25);//some random color
+	
 	return graph;
 }
 
