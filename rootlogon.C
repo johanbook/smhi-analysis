@@ -10,6 +10,9 @@ void rootlogon() {
   gStyle->SetPadBottomMargin(0.16);
   gStyle->SetPadLeftMargin(0.16);
   
+  // To allow for transparency
+  gEnv->SetValue("OpenGL.CanvasPreferGL",1);
+  
   gROOT->ProcessLine(".L code/tpoint.cpp+"); //Load the classes that we want to use automatically - Convenient!
   gROOT->ProcessLine(".L code/treader.cpp+");
   gROOT->ProcessLine(".L code/cool_image.C+"); //The + means to recompile only if it changed sine last time
