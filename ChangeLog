@@ -10,6 +10,10 @@ The classes tpoint and treader have been developped to facilitate IO. treader re
 Customized tpoint and treader to be able to determine format (SMHI or Uppsala) and parse it on its own.
 /Johan Book
 
-2017-11-2
+2017-11-02
 Created branch transparent_graphs where cool_image.C is producing several different graphs which will later will be combined to a single image.
 /Johan Book
+
+2017-11-05
+Saratrial.cpp added in order to read the data of the file Uppsala.dat into a bidimensional array and then store in two different arrays the number of each year and the highest temperature of each year.
+/Sara Gabrielli
