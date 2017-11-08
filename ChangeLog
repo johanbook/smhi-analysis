@@ -33,10 +33,7 @@ global_warming.C is almost complete. It works fine and creates the histogram exp
 2017-11-07
 The report has been discussed between the three of us and the workload has been distributed. Another meeting has been set in order to together create slides for the presentation.
 /Edvin Jakobsson
-<<<<<<< HEAD
 
 2017-11-08
 global_warming.C is complete. It works as expected and the code is now written in a more constistant way and with many comments explaining it.
 /Edvin Jakobsson
-=======
->>>>>>> 79e8c94c224b4fcc60354e316bb799f33e7d5dec
