@@ -1,4 +1,4 @@
-// cool_image.C
+// generate_images.C
 // 
 // Johan Book
 // 2017-11-01
