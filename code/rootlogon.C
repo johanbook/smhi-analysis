@@ -9,10 +9,9 @@ void rootlogon() {
   gStyle->SetPadRightMargin(0.05);
   gStyle->SetPadBottomMargin(0.16);
   gStyle->SetPadLeftMargin(0.16);
-  
-  gROOT->ProcessLine(".L tpoint.cpp+"); //Load the classes that we want to use automatically - Convenient!
+ 
+  gROOT->ProcessLine(".L tpoint.cpp+");
   gROOT->ProcessLine(".L treader.cpp+");
-  gROOT->ProcessLine(".L cool_image.C+"); //The + means to recompile only if it changed sine last time
   //Now you can type project() to invoke the function defined in project
   //You can also create and invoke functions in a temptrender manually by doing e.g. tempTrender t(pathToFile); t.hotCold();
 }
