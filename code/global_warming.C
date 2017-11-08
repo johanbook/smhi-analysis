@@ -5,7 +5,7 @@
 // 2017-11-06
 //
 // 
-//
+// Reads data from file and calculates 
 
 // include C++ STL headers that are used to read the data
 #include <iostream>
@@ -16,23 +16,21 @@
 using namespace std;
 
 // ROOT library objects
-#include <TF1.h> // 1d function class
-#include <TH1.h> // 1d histogram classes
-#include <TStyle.h>  // style object
-#include <TMath.h>   // math functions
-#include <TCanvas.h> // canvas object
-#include <TGaxis.h>
-#include <TLegend.h>
-#include <TGraph.h>
+#include <TF1.h> 		// 1d function class
+#include <TH1.h> 		// 1d histogram classes
+#include <TStyle.h> 	// style object
+#include <TMath.h>   	// math functions
+#include <TCanvas.h> 	// canvas object
+#include <TGaxis.h>		// axis object needed to change the y-axis
+#include <TLegend.h>	// Legend object
+#include <TGraph.h>		// graph object
 
 
 
-// Reads data and generates
-void global_warming_function(string path) {
+// Reads data and generates a histogram of the average temperature over different years
+void global_warming_function(string path, int startYear, int endYear) {		//argument is path of data file (e.x. "../data/Uppsala.dat")
 	
-	int startYear = 1722;
-	int endYear = 2013;
-	int numberOfYears = endYear-startYear+1;
+	int numberOfYears = endYear-startYear+1;	//+1 because the end year is included
 		
 	treader* tr = new treader(path);
 	
@@ -40,30 +38,28 @@ void global_warming_function(string path) {
 	int numberOfPoints = 0;
 	double temporarySave = 0;
 	double totalSum = 0;
-	Double_t averageTemp[numberOfYears];
-	Double_t year[numberOfYears];
+	double averageTemp[numberOfYears];
+	double year[numberOfYears];
 		
 	for(int i = startYear; i<=endYear; ++i){
 
 		// Read from file while there is data to read
-		while(tr->has_next())
-		{	
+		while(tr->has_next()){	//keeps reading points until there are no more data or until the if statement breaks the while-loop
+	
 			// Get tpoint
 			tpoint* tp = tr->get_tpoint();
-
-			if (tp->get_year() != i){
+	
+			if(tp->get_year() > i){
 				temporarySave = tp->get_temperature();
 				break;
 			}
 
-			++numberOfPoints;
-			//cout << tp->get_year() << "-" << tp->get_month() << "-" << tp->get_day() << " " << tp->get_temperature() << "\n";
-	
-			temperatureSum += tp->get_temperature();
-			
-			//histo->Fill(tp->get_temperature());
+			if(tp->get_year() == i){
+				++numberOfPoints;
+				temperatureSum += tp->get_temperature();
+			}
 		}
-		//cout << i << "\t Avg temp: " << temperatureSum/numberOfPoints << "\t total average: " << totalSum/(i-startYear) << endl;
+		
 		year[i-startYear] = i;
 		averageTemp[i-startYear] = temperatureSum/numberOfPoints;
 
@@ -72,9 +68,11 @@ void global_warming_function(string path) {
 		numberOfPoints = 1;
 	}
 	
-	double totAverage = 0;
 	
-	for(int i = 0; i <(numberOfYears); ++i){
+	
+	//calculate a total average over all years
+	double totAverage = 0;
+	for(int i = 0; i < numberOfYears; ++i){
 		totAverage += averageTemp[i]/numberOfYears;
 	}
 
@@ -91,11 +89,11 @@ void global_warming_function(string path) {
 	
 	for(int i = 0; i<numberOfYears; ++i){
 		double temp = averageTemp[i] - totAverage;
-		histoTot->SetBinContent(i,temp);
+		histoTot->SetBinContent(i+1,temp);
 		if(temp >= 0)
-			histoRed->SetBinContent(i,temp);
+			histoRed->SetBinContent(i+1,temp);
 		else
-			histoBlue->SetBinContent(i,temp);	
+			histoBlue->SetBinContent(i+1,temp);	
 		}	
 		
 	TLegend *leg = new TLegend(0.65, 0.80, 0.94, 0.94, "", "NDC");
@@ -126,7 +124,7 @@ void global_warming_function(string path) {
 	histoRed->Draw();
 	histoBlue->Draw("Same");
 
-	TGaxis *axis2 = new TGaxis(1722,-4,1722,4,-4+totAverage,4+totAverage,510);
+	TGaxis *axis2 = new TGaxis(startYear,-4,startYear,4,-4+totAverage,4+totAverage,510);
 	axis2->SetName("axis2");
 	axis2->Draw();
 	leg->Draw();
