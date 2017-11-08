@@ -29,9 +29,13 @@ Saratrial.cpp added in order to read the data of the file Uppsala.dat into a bid
 >>>>>>> 589fedb75e0b28625111263109c2218808492968
 
 2017-11-07
-global.warming.C is almost complete. It works fine and creates the histogram expected. What is left is tidying up the code to make it simpler. Comments are also needed.
+global_warming.C is almost complete. It works fine and creates the histogram expected. What is left is tidying up the code to make it simpler. Comments are also needed.
 /Edvin Jakobsson
 
 2017-11-07
 The report has been discussed between the three of us and the workload has been distributed. Another meeting has been set in order to together create slides for the presentation.
+/Edvin Jakobsson
+
+2017-11-08
+global_warming.C is complete. It works as expected and the code is now written in a more constistant way and with many comments explaining it.
 /Edvin Jakobsson
