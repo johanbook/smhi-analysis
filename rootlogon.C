@@ -10,12 +10,13 @@ void rootlogon() {
   gStyle->SetPadBottomMargin(0.16);
   gStyle->SetPadLeftMargin(0.16);
   
-  // To allow for transparency
+  // To allow for transparency (Does Not Work)
   gEnv->SetValue("OpenGL.CanvasPreferGL",1);
   
-  gROOT->ProcessLine(".L code/tpoint.cpp+"); //Load the classes that we want to use automatically - Convenient!
+  //Load the classes that we want to use automatically
+  gROOT->ProcessLine(".L code/tpoint.cpp+");
   gROOT->ProcessLine(".L code/treader.cpp+");
-  gROOT->ProcessLine(".L code/cool_image.C+"); //The + means to recompile only if it changed sine last time
+  gROOT->ProcessLine(".L code/generate_images.C+"); //The + means to recompile only if it changed sine last time
   //Now you can type project() to invoke the function defined in project
   //You can also create and invoke functions in a temptrender manually by doing e.g. tempTrender t(pathToFile); t.hotCold();
 }
