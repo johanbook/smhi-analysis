@@ -14,7 +14,7 @@ int Date_Tmax[292], Date_Tmin[292];
 int day_Tmax, day_Tmin;
 double Arr_temporaryHot[2],Arr_temporaryCold[2];
 
-//MAIN
+// MAIN
 
 	int main(){
 	double table [106640][6];//ndata= total number of lines. 
