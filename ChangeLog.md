@@ -1,5 +1,4 @@
 **2017-10-27**
-
 The project plan has been discussed and updated. The workload has been distributed between the three of us.
 /Edvin Jakobsson
 
