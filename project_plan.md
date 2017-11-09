@@ -26,7 +26,7 @@ Compare the average temperature changes in different areas (data sets). Create a
 ## Objects in code/
 - generate_images.C - generates images (Johan Book)
 - global_warming.C - stuff (Edvin Jakobsson)
-- root_template.C - basic template for using treader and tpoint
+- root_template.C - basic template for using treader and tpoint (Johan Book)
 - rootlogon.C - script run when root is started
 - treader - object to reads data line by line and convert it into tpoints (Johan Book) 
 - tpoint - object that stores one point in time-temperature space (Johan Book)
