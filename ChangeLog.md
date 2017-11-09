@@ -61,3 +61,8 @@ global_warming.C is complete. It works as expected and the code is now written i
 ###### 2017-11-08
 Sara_Analyze.C is complete and works as espected producing both the histograms of hottest and coldest days and tridimensional graphs.
 /Sara Gabrielli
+
+
+##### 2017-11-09
+Report-part complete. Introduction also added.
+/Edvin Jakobsson
