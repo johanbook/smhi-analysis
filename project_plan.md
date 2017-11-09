@@ -4,8 +4,7 @@ MNXB01 2017-10-27
 
 ## Ideas
 - Compare average temperature between places (using overlay with semi-transparent graphs)
-- Prove global warming in Uppsala
-  -Calculate difference in temperature for each place over the years (data from Uppsala)
+- Calculate difference in temperature for each place over the years (data from Uppsala)
 - Look into how it affects the location of the hottest and the coldest day in a year
   
 #### Edvin
