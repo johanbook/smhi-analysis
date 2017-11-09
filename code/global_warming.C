@@ -82,13 +82,11 @@ void global_warming_function(string path, int startYear, int endYear) {		// argu
 	// Creates histograms
 	TH1F* histoRed = new TH1F("Red", ";Year; Temperature [#circ C]",numberOfYears , startYear, endYear);	
 	TH1F* histoBlue = new TH1F("Blue", "; Year; Temperature [#circ C",numberOfYears , startYear, endYear);
-	TH1F* histoTot = new TH1F("Total", "; Year; Temperature [#circ C",numberOfYears , startYear, endYear);		//will include all values. Will not be drawn, only needed for creating the graphs
 	
 	// adds the temperatures to the histograms
 	for(int i = 0; i<numberOfYears; ++i){
 		double temp = averageTemp[i] - totAverage;	//temperatures being focused around 0 instead of the total average. I was only able to create the picture with the blue pillars dropping down from zero, so I eventually solved it by creating a new "fake" y-axis instead
-		histoTot->SetBinContent(i+1,temp);
-	
+		averageTemp[i] -= totAverage;
 		if(temp >= 0)
 			histoRed->SetBinContent(i+1,temp);
 		else
@@ -103,14 +101,15 @@ void global_warming_function(string path, int startYear, int endYear) {		// argu
 	legend->AddEntry(histoBlue, "Below average temperature", "F");
 	
 	// Creates a graph showing a moving average
-	int movingAverageRange = 20;
+	int movingAverageRange = 10;
 	int movingAverageSteplength = 10;
 	TGraph* graph1 = new TGraph();
-	for(int bin = 1; bin < histoTot->GetNbinsX(); bin += movingAverageSteplength) {
-		double y = 0;
-		for(int i = -movingAverageRange; i <= movingAverageRange; ++i) 
-			y += (histoTot->GetBinContent(bin+i)/(movingAverageRange*2+1));		
-		graph1->SetPoint(graph1->GetN(), histoTot->GetBinCenter(bin),y);
+	for(int bin = movingAverageRange; bin < numberOfYears-movingAverageRange; bin += movingAverageSteplength) {
+		double movingAverage = 0;	
+		for(int i = -movingAverageRange; i <= movingAverageRange; ++i){ 
+			movingAverage += (averageTemp[bin+i]/(movingAverageRange*2+1));
+		}	
+		graph1->SetPoint(graph1->GetN(), histoRed->GetBinCenter(bin),movingAverage);
 	}
 	graph1->SetLineWidth(4);
 	
@@ -118,11 +117,12 @@ void global_warming_function(string path, int startYear, int endYear) {		// argu
 	movingAverageRange = 5;
 	movingAverageSteplength = 5;
 	TGraph* graph2 = new TGraph();
-	for(int bin = 1; bin < histoTot->GetNbinsX(); bin += movingAverageSteplength) {
-		double y = 0;	
-		for(int i = -movingAverageRange; i <= movingAverageRange; ++i) 
-			y += (histoTot->GetBinContent(bin+i)/(movingAverageRange*2+1));	
-		graph2->SetPoint(graph2->GetN(), histoTot->GetBinCenter(bin),y);
+	for(int bin = movingAverageRange; bin < numberOfYears-movingAverageRange; bin += movingAverageSteplength) {
+		double movingAverage = 0;	
+		for(int i = -movingAverageRange; i <= movingAverageRange; ++i){ 
+			movingAverage += (averageTemp[bin+i]/(movingAverageRange*2+1));
+		}	
+		graph2->SetPoint(graph2->GetN(), histoRed->GetBinCenter(bin),movingAverage);
 	}
 	graph2->SetLineWidth(2);
 		
