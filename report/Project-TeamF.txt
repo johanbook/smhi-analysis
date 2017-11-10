@@ -1,0 +1,5 @@
+The project is found at
+https://github.com/JohanBook/MNXB01-Project
+
+The report is found at
+https://github.com/JohanBook/MNXB01-Project/blob/master/report/report.pdf
