@@ -88,8 +88,8 @@ double Arr_temporaryHot[2],Arr_temporaryCold[2];
 	}
 	
 	 // open output file1 and file2
-	  ofstream file1("year_hotday_coldday.dat");
-	  ofstream file2("years_days_temps.dat");
+	  ofstream file1("../data/year_hotday_coldday.dat");
+	  ofstream file2("../data/years_days_temps.dat");
 	
 	for(int k=0; k<nyears;k++){//test
 		file1<<Arr_year[k]<<" "<<Date_Tmax[k]<<" "<<Date_Tmin[k]<<" "<<endl;
